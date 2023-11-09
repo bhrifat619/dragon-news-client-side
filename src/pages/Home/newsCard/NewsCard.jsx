@@ -8,7 +8,7 @@ import Rating from "react-rating";
 import { Link } from "react-router-dom";
 
 const NewsCard = ({ news }) => {
-    console.log(news);
+    // console.log(news);
     const { title, details, _id, image_url, author, total_view, rating } = news;
     return (
         <Card className=" mb-4">
