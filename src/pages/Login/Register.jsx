@@ -4,11 +4,12 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProvider";
+import { useState } from "react";
 
 const Register = () => {
-    const {createUser} = useContext(AuthContext);
-
-    const handleRegister = (event) =>{
+    const { createUser } = useContext(AuthContext);
+    const [accepted, setAccepted] = useState(false);
+    const handleRegister = (event) => {
         event.preventDefault();
         console.log('submit button clicked on register');
         const form = event.target;
@@ -16,14 +17,17 @@ const Register = () => {
         const photo = form.photo.value;
         const email = form.email.value;
         const password = form.password.value;
-        createUser(email,password)
-        .then(result => {
-            const createdUser = result.user;
-            console.log(createdUser);
-        })
-        .catch(error =>{
-            console.log(error);
-        })
+        createUser(email, password)
+            .then(result => {
+                const createdUser = result.user;
+                console.log(createdUser);
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
+    const handleAccepted = event => {
+        setAccepted(event.target.checked);
     }
     return (
         <div>
@@ -38,7 +42,7 @@ const Register = () => {
 
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Photo url</Form.Label>
-                        <Form.Control type="text" name="photo"  placeholder="Enter a photo url" />
+                        <Form.Control type="text" name="photo" placeholder="Enter a photo url" />
 
                     </Form.Group>
 
@@ -53,9 +57,13 @@ const Register = () => {
                         <Form.Control type="password" required name="password" placeholder="Password" />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                        <Form.Check type="checkbox" name="accept" label="Accept terms & conditions." />
+                        <Form.Check
+                            onClick={handleAccepted}
+                            type="checkbox"
+                            name="accept"
+                            label={<>Accept <Link to="/terms">Terms & Conditions</Link></>} />
                     </Form.Group>
-                    <Button variant="primary" type="submit">
+                    <Button variant="primary" disabled={!accepted} type="submit">
                         Register
                     </Button> <br />
                     <Form.Text className="text-secondary">

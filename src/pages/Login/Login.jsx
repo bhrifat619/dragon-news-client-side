@@ -3,11 +3,17 @@ import { useContext } from "react";
 import { Container } from "react-bootstrap";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProvider";
 
 const Login = () => {
+    const navigate = useNavigate();
     const { signIn } = useContext(AuthContext);
+    const location = useLocation();
+    
+    const from = location.state?.from?.pathname || '/catagory/0';
+
+    console.log('login page location', location);
     const handleLogin = event => {
         event.preventDefault();
         console.log('submit button clicked on login');
@@ -18,6 +24,7 @@ const Login = () => {
             .then(result => {
                 const loggedUser = result.user;
                 console.log(loggedUser);
+                navigate(from,{replace:true})
             })
             .catch(error => {
                 console.log(error);
