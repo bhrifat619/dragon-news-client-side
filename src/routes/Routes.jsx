@@ -40,8 +40,19 @@ const router = createBrowserRouter([
             {
                 path: ":id",
                 element: <Catagory></Catagory>,
-                loader: ({ params }) => fetch(`http://localhost:5000/catagories/${params.id}`)
+                loader: ({ params }) => fetch(`https://the-news-dragon-server-pi-two.vercel.app/catagories/${params.id}`)
             },
+            /* {
+                path: ":id",
+                element: <Catagory></Catagory>,
+                loader: ({ params }) => fetch(`https://the-news-dragon-server-jtxpeopxb-rifat-bhuiyans-projects.vercel.app/catagories/${params.id}`)
+            }, */
+            /* loader: ({ params }) => {
+                async function externalContent() {
+                    await fetch(`https://the-news-dragon-server-82plugslw-rifat-bhuiyans-projects.vercel.app/catagories/${params.id}`)
+                        .then(res => { return res })
+                }
+            } */
         ]
     },
 
@@ -49,11 +60,17 @@ const router = createBrowserRouter([
         path: "/news",
         element: <NewsLayout></NewsLayout>,
         children: [
-            {
+            /* {
                 path: ":id",
                 element: <PrivateRoute><News></News></PrivateRoute>,
                 loader: ({ params }) => fetch(`http://localhost:5000/news/${params.id}`)
-            }
+            }, */
+            {
+                path: ":id",
+                // element: <News></News>,
+                element: <PrivateRoute><News></News></PrivateRoute>,
+                loader: ({ params }) => fetch(`https://the-news-dragon-server-pi-two.vercel.app/news/${params.id}`)
+            },
         ]
     }
 ])

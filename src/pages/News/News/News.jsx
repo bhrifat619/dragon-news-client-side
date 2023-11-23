@@ -7,6 +7,7 @@ const News = () => {
     const news = useLoaderData();
     console.log(news);
     const { title, details, image_url, total_view, author, rating, category_id } = news;
+    console.log(category_id);
     return (
         <div>
             <Card className="p-2">
